@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './style.css';
 
 
 
- var options = [
-      "Tecnico",
-      "Asistente",
-      "Medico",
-      "Preparador",
-      "Etc"
-  ];
-  console.log(options);
 
-const Register = () => {
+class Register extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      roles: [
+        "Tecnico",
+        "Asistente",
+        "Medico",
+        "Preparador",
+        "Etc"
+    ]
+    };
+  }
+  render() { 
+    const { roles } = this.state;
     return (
         <div className="mt-3">
             <h1>Registro</h1>
@@ -96,9 +102,7 @@ const Register = () => {
               <div className="form-group">
                   <label>Rol:</label>
                   <select >
-                 <option>1</option>
-                 <option>2</option>
-                 <option>3</option>
+                {roles.map(rol => <option>{rol}</option>)}
                 </select> 
               </div>
               <button type="submit" className="btn btn-success">Agregar</button>
@@ -108,6 +112,7 @@ const Register = () => {
            
         </div>
     );
+  };
 
 }
 export default Register ;
