@@ -1,0 +1,34 @@
+{
+    "array-team": [
+        {
+            "name-team": "Junior",
+            "flag": " ",
+            "shield": "",
+            "player": [
+                {
+                    "name": "Martin",
+                    "lastname": "Arzuaga",
+                    "birthdate": "01-12-70",
+                    "position": "delantero",
+                    "number": "10",
+                    "headline": "true"
+                }
+            ],
+            "technical-body": [
+                {
+                    "name": "Juancho",
+                    "lastname": "Roy",
+                    "birthdate": "01-12-70",
+                    "nationality": "delantero",
+                    "rol": [
+                        "tecnico",
+                        "asistente",
+                        "medico",
+                        "preparador",
+                        "etc"
+                    ]
+                }
+            ]
+        }
+    ]
+}

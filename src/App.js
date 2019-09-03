@@ -1,26 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+// import { Provider } from 'react-redux';
+import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom';
 import './App.css';
+import Register from './components/Register';
+import Teams from './components/Teams';
+import NotFoundPage from './components/NotFoundPage';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+        <BrowserRouter>
+          <div>
+            <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+              <div className="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul className="navbar-nav mr-auto">
+                  <li className="nav-item">
+                    <NavLink to="/" className="nav-link" activeClassName="active" exact={true}>Register</NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink to="/teams" className="nav-link" activeClassName="active" exact={true}>Teams</NavLink>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+            <main role="main" className="container content">
+              <Switch >
+                <Route path="/" component={Register} exact={true} />
+                <Route path="/teams" component={Teams} exact={true} />
+                <Route component={NotFoundPage} />
+              </Switch>
+            </main>
+            <footer className="container">
+              <p>© Wilfrido Garcia</p>
+            </footer>
+          </div>
+        </BrowserRouter>
+    );
+  }
 }
 
 export default App;
