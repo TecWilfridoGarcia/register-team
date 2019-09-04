@@ -1,118 +1,93 @@
 import React, { Component } from 'react';
 import './style.css';
-
-
+import axios from 'axios';
 
 
 class Register extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      roles: [
-        "Tecnico",
-        "Asistente",
-        "Medico",
-        "Preparador",
-        "Etc"
-    ]
-    };
+  state = { 
+      team: "",
+      flag: null,
+      shield: null,
+  }
+
+  handleChange = event => {
+    console.log(event.target.value);
+    this.setState({ team: event.target.value });
+  }
+
+
+  onChangeFlag(e){
+    let files = e.target.files;
+    let reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload = (e) => {
+      const url="http://localhost:3000/array-team";
+      const formDataImages = {flag:e.target.result};  
+      return formDataImages;
+    }
+  }
+  onChangeShield(e){
+    let files = e.target.files;
+    let reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload = (e) => {
+      const url="http://localhost:3000/array-team";
+      const formDataImages = {shield:e.target.result};  
+      return formDataImages;
+    }
+  }
+
+
+
+  handleSubmit = e => {
+    if(this.state.team === "") {
+      console.log('campo esta vacio');
+      e.preventDefault();
+      return;
+    }
+    const team = {
+      team: this.state.team,
+      flag: this.state.flag,
+      shield: this.state.shield
+    }
+    axios.post('http://localhost:3000/array-team', team, this.onChangeFlag(e),this.onChangeShield(e) 
+    ).then(
+      res => {
+        e.preventDefault();
+        console.log(res);
+        console.log(res.data);
+        
+      }
+    )
   }
   render() { 
-    const { roles } = this.state;
     return (
         <div className="mt-3">
             <h1>Registro</h1>
           <div className="row">
             <div className="col">
             <h4>Informacion del equipo</h4>
-            <form>
+            <form onSubmit={this.handleSubmit}>
               <div className="form-group">
                   <label>Nombre:</label>
-                  <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
+                  <input type="text" className="form-control"  placeholder="name@example.com" name="team" onChange={this.handleChange} />
+                  <img width="350px" src={this.state.picture}/>
               </div>
               <div className="form-group">
                 <label>Bandera:</label>
-                <input type="file" className="form-control-file" id="exampleFormControlFile1" />
+                <input type="file" className="form-control-file" name="flag" onChange={(e)=>{this.onChangeFlag(e)}} />
               </div>
               <div className="form-group">
                 <label>Escudo:</label>
-                <input type="file" className="form-control-file" id="exampleFormControlFile1" />
+                <input type="file" className="form-control-file" name="shield" onChange={(e)=>{this.onChangeShield(e)}} />
               </div>
-              <div>
-              <h5>Jugadores</h5>
-              <ul>
-              <li>Martin Arzuga, 10 , delantero</li>
-              </ul>
-              <h5>Cuerpo tecnico</h5>
-              <ul>
-              <li>Sereno Gonzalez, Colombiana , Tecnico</li>
-              </ul>
-            </div>
               <button type="submit" className="btn btn-success">Enviar</button>
             </form>
-           
             </div>
-            <div className="col">
-              <form>
-              <h4>Agregar jugadores</h4>
-              <div className="form-group">
-                  <label>Nombre:</label>
-                  <input type="text" className="form-control" id="name" placeholder="Nombre" />
-              </div>
-              <div className="form-group">
-                  <label>Apellidos:</label>
-                  <input type="text" className="form-control" id="lastname" placeholder="Apellidos" />
-              </div>
-              <div className="form-group">
-                  <label>Fecha de nacimiento:</label>
-                  <input type="date" className="form-control" id="birthdate" placeholder="Fecha de nacimiento" />
-              </div>
-              <div className="form-group">
-                  <label>Posicion:</label>
-                  <input type="text" className="form-control" id="position" placeholder="Posicion" />
-              </div>
-              <div className="form-group">
-                  <label>Numero:</label>
-                  <input type="text" className="form-control" id="number" placeholder="Numero" />
-              </div>
-              <div className="form-group">
-                  <label>Es titular?</label>
-                  <input type="checkbox" className="form-control" id="headline" placeholder="Titular" />
-              </div>
-              <button type="submit" className="btn btn-success">Agregar</button>
-              </form>
-              <form>
-              <h4>Agregar cuerpo tecnico</h4>
-              <div className="form-group">
-                  <label>Nombre:</label>
-                  <input type="text" className="form-control" id="name" placeholder="Nombre" />
-              </div>
-              <div className="form-group">
-                  <label>Apellidos:</label>
-                  <input type="text" className="form-control" id="lastname" placeholder="Apellidos" />
-              </div>
-              <div className="form-group">
-                  <label>Fecha de nacimiento:</label>
-                  <input type="date" className="form-control" id="birthdate" placeholder="Fecha de nacimiento" />
-              </div>
-              <div className="form-group">
-                  <label>Nacionalidad:</label>
-                  <input type="text" className="form-control" id="position" placeholder="Posicion" />
-              </div>
-              <div className="form-group">
-                  <label>Rol:</label>
-                  <select >
-                {roles.map(rol => <option>{rol}</option>)}
-                </select> 
-              </div>
-              <button type="submit" className="btn btn-success">Agregar</button>
-              </form>
-            </div>
-          </div>
-           
+        </div>
         </div>
     );
   };
 
 }
-export default Register ;
+export default Register;
